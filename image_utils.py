@@ -11,7 +11,6 @@ def load_image(path):
 
    
 def edge_detection(image_array):
-    # 1. המרה לגווני אפור
     gray_image = np.mean(image_array, axis=2)
     
     # 2. פילטרים (Sobel Kernels)
@@ -23,4 +22,11 @@ def edge_detection(image_array):
                         [ 0,  0,  0],
                         [ 1,  2,  1]])
     
-
+    # 3. קונבולוציה
+    edgeY = convolve2d(gray_image, kernelY, mode='same', boundary='fill', fillvalue=0)
+    edgeX = convolve2d(gray_image, kernelX, mode='same', boundary='fill', fillvalue=0)
+    
+    # 4. חישוב עוצמה (Magnitude)
+    edgeMAG = np.sqrt(edgeX**2 + edgeY**2)
+    
+    return edgeMAG
